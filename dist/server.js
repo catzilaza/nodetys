@@ -30,39 +30,29 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-//import { connectToDatabase } from "./services/databaseService"
-//import { gamesRouter } from "./routes/gamesRoute";
+const morgan_1 = __importDefault(require("morgan"));
 const dessertDbService_1 = require("./services/dessertDbService");
 const dessertRoute_1 = require("./routes/dessertRoute");
 const indexRoute_1 = require("./routes/indexRoute");
 const userRoute_1 = require("./routes/userRoute");
-// const allowedOrigins: string[] = ['http://localhost:5000/api'];
-// const coresoptions : cors.CorsOptions = {
-//   origin: allowedOrigins
-// };
 const PORT = process.env.PORT;
-//const port = config.get<number>("port");
-//console.log("config : ",  config.get('users'));
 const app = (0, express_1.default)();
-app.use(express_1.default.json());
+app.use(express_1.default.json()); // แปลงข้อมูลที่มีรูปแบบ JSON String ให้อยู่ในรูป JSON Object
+//app.use(express.urlencoded({ extended: false }))//โดยปกติ ข้อมูลที่ส่งจากฟอร์ม จะอยู่ในรูปแบบ URL encoding
 app.use((0, cors_1.default)());
+app.use((0, morgan_1.default)("dev")); // เก็บ log file
 app.use(express_1.default.static("public"));
-app.use("/", indexRoute_1.indexRouter);
-app.use("/api/user", userRoute_1.userRouter);
-app.use("/api/desserts", dessertRoute_1.dessertRouter);
-//app.use("/api/games", gamesRouter);
-// connectToDatabase().then(()=>{
-//   console.log("Connect To Database OK !");
-// }).catch((error)=>{
-//   console.log("Fail To Database Error !");
-// })
-(0, dessertDbService_1.connectToDatabase1)()
+(0, dessertDbService_1.connectToDatabase)()
     .then(() => {
     console.log("Connect To Database OK !");
 })
     .catch((error) => {
     console.log("Fail To Database Error !", error);
 });
+app.use("/", indexRoute_1.indexRouter);
+app.use("/api", indexRoute_1.indexRouter);
+app.use("/api/user", userRoute_1.userRouter);
+app.use("/api/desserts", dessertRoute_1.dessertRouter);
 app.listen(PORT, () => {
     console.log(`[Server]: It is running at http://localhost:${PORT}`);
 });

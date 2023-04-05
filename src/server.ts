@@ -2,50 +2,36 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import express, { Express } from "express";
 import cors from "cors";
-import { CorsOptions } from "cors";
-import config from "config";
-//import { connectToDatabase } from "./services/databaseService"
-//import { gamesRouter } from "./routes/gamesRoute";
+import morgan from "morgan";
+import { readdirSync } from "fs";
 
-import { connectToDatabase1 } from "./services/dessertDbService";
-
+import { connectToDatabase } from "./services/dessertDbService";
 import { dessertRouter } from "./routes/dessertRoute";
 import { indexRouter } from "./routes/indexRoute";
 import { userRouter } from "./routes/userRoute";
-// const allowedOrigins: string[] = ['http://localhost:5000/api'];
-// const coresoptions : cors.CorsOptions = {
-//   origin: allowedOrigins
-// };
 
 const PORT = process.env.PORT;
-//const port = config.get<number>("port");
-//console.log("config : ",  config.get('users'));
-
 const app: Express = express();
 
-app.use(express.json());
+app.use(express.json()); // แปลงข้อมูลที่มีรูปแบบ JSON String ให้อยู่ในรูป JSON Object
+//app.use(express.urlencoded({ extended: false }))//โดยปกติ ข้อมูลที่ส่งจากฟอร์ม จะอยู่ในรูปแบบ URL encoding
 app.use(cors());
+app.use(morgan("dev")); // เก็บ log file
 
 app.use(express.static("public"));
 
-app.use("/", indexRouter);
-app.use("/api/user", userRouter);
-app.use("/api/desserts", dessertRouter);
-//app.use("/api/games", gamesRouter);
-
-// connectToDatabase().then(()=>{
-//   console.log("Connect To Database OK !");
-// }).catch((error)=>{
-//   console.log("Fail To Database Error !");
-// })
-
-connectToDatabase1()
+connectToDatabase()
   .then(() => {
     console.log("Connect To Database OK !");
   })
   .catch((error) => {
     console.log("Fail To Database Error !", error);
   });
+
+app.use("/", indexRouter);
+app.use("/api", indexRouter);
+app.use("/api/user", userRouter);
+app.use("/api/desserts", dessertRouter);
 
 app.listen(PORT, () => {
   console.log(`[Server]: It is running at http://localhost:${PORT}`);

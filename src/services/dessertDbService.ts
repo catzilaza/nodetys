@@ -2,8 +2,6 @@
 import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
 
-//import { UserConstraintSchema } from "../models/userModel";
-
 // Global Variables
 export const collections: {
   desserts?: mongoDB.Collection | any;
@@ -11,16 +9,16 @@ export const collections: {
 } = {};
 
 // Initialize Connection
-export async function connectToDatabase1() {
+export async function connectToDatabase() {
   dotenv.config();
 
   const client: mongoDB.MongoClient = new mongoDB.MongoClient(
-    `${process.env.DB1_CONN_STRING}`
+    `${process.env.DB_CONN_STRING}`
   );
 
   await client.connect();
 
-  const db: mongoDB.Db = client.db(process.env.DB1_NAME);
+  const db: mongoDB.Db = client.db(process.env.DB_NAME);
 
   //await db.command(UserConstraintSchema);
 

@@ -5,17 +5,17 @@ import { ObjectId } from "mongodb";
 // Class Implementation
 export default class Dessert {
   constructor(
-    public dessert_id: string,
-    public dessert_name: string, 
-    public dessert_slug: string,
-    public dessert_image: string,
-    public dessert_category: string,
-    public dessert_brand: string,
-    public dessert_price: number,
-    public dessert_countInstock: number,
-    public dessert_description: string,
-    public dessert_rating: number,
-    public dessert_numReviews: number,
+    public _id: string,
+    public name: string, 
+    public slug: string,
+    public image: string,
+    public category: string,
+    public brand: string,
+    public price: number,
+    public countInstock: number,
+    public description: string,
+    public rating: number,
+    public numReviews: number,
     public id?: ObjectId
   ) {}
 }

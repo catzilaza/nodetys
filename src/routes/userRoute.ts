@@ -1,5 +1,4 @@
-import { Router } from "express";
-import express from "express";
+import express, { Router } from "express";
 
 import {
   getUserAll,
@@ -14,7 +13,7 @@ import { Authenticate } from "../utils/authenticate";
 
 export const userRouter = Router();
 
-userRouter.use(express.json());
+//userRouter.use(express.json());
 
 userRouter.get("/", getUserAll);
 

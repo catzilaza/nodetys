@@ -32,20 +32,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectToDatabase1 = exports.collections = void 0;
+exports.connectToDatabase = exports.collections = void 0;
 // External Dependencies
 const mongoDB = __importStar(require("mongodb"));
 const dotenv = __importStar(require("dotenv"));
-//import { UserConstraintSchema } from "../models/userModel";
 // Global Variables
 exports.collections = {};
 // Initialize Connection
-function connectToDatabase1() {
+function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         dotenv.config();
-        const client = new mongoDB.MongoClient(`${process.env.DB1_CONN_STRING}`);
+        const client = new mongoDB.MongoClient(`${process.env.DB_CONN_STRING}`);
         yield client.connect();
-        const db = client.db(process.env.DB1_NAME);
+        const db = client.db(process.env.DB_NAME);
         //await db.command(UserConstraintSchema);
         // await db.command({
         //   collMod: process.env.USER_COLLECTION_NAME,
@@ -114,4 +113,4 @@ function connectToDatabase1() {
     and collection: ${userCollection.collectionName}`);
     });
 }
-exports.connectToDatabase1 = connectToDatabase1;
+exports.connectToDatabase = connectToDatabase;

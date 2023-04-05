@@ -6,16 +6,14 @@ import { collections } from "../services/dessertDbService";
 import User from "../models/userModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
 // GET
 export async function getUserAll(req: Request, res: Response) {
   try {
-    // let checkInputUser:User = new User("","","","","","","","","","","");
-    // checkInputUser.userHello();
-
     const users: User[] = (await collections.users
       .find({})
-      .toArray()) as User[];      
-      
+      .toArray()) as User[];
+
     res.status(200).send(users);
   } catch (error: any) {
     res.status(500).send(error.message);
@@ -43,6 +41,7 @@ export async function getUserById(req: Request, res: Response) {
 export async function createUser(req: Request, res: Response) {
   try {
     const newUser = req.body as User;
+    console.log("createUser(req: Request, res: Response) : ", newUser);
 
     const queryusername = { user_name: newUser.user_name };
     const usernameResult = (await collections.users.findOne(
@@ -67,7 +66,10 @@ export async function createUser(req: Request, res: Response) {
     // set user level, date/timestamp and encrypt password
     newUser.user_level = "Level User";
     newUser.user_timeStamp = new Date();
-    newUser.user_password = await bcrypt.hash(newUser.user_password, 10);
+    newUser.user_password = await bcrypt.hash(
+      newUser.user_password,
+      `process.env.BCRYPT_HASH_SALT`
+    );
 
     const result = await collections.users.insertOne(newUser);
 
@@ -90,23 +92,50 @@ export async function signinUser(req: Request, res: Response) {
     if (!usernameResult) {
       return res.status(409).send(`USERNAME has not been registered`);
     }
-    //Create token
-    if (usernameResult) {
+
+    if (
+      await bcrypt.compare(
+        usersignin.user_password,
+        usernameResult.user_password
+      )
+    ) {
       const user_id = usernameResult.user_id;
-      const user_email = usernameResult.user_email;
+      const user_email = usernameResult.user_email;      
       const user_token = jwt.sign(
         { user_id, user_email },
-        `process.env.ACCESS_TOKEN_SECRET_KEY`,
+        `process.env.JWT_SECRET`,
         {
-          expiresIn: "3m",
+          expiresIn: "30m",
           algorithm: "HS256",
         }
       );
 
+      
       usernameResult.user_token = user_token;
 
       res.status(200).send(usernameResult);
     }
+    else {
+      return res.status(409).send(`USERNAME password is not matched`);
+    }
+    
+    //Create token
+    // if (usernameResult) {
+    //   const user_id = usernameResult.user_id;
+    //   const user_email = usernameResult.user_email;
+    //   const user_token = jwt.sign(
+    //     { user_id, user_email },
+    //     `process.env.JWT_SECRET`,
+    //     {
+    //       expiresIn: "3m",
+    //       algorithm: "HS256",
+    //     }
+    //   );
+
+    //   usernameResult.user_token = user_token;
+
+    //   res.status(200).send(usernameResult);
+    // }
   } catch (error) {
     res
       .status(404)

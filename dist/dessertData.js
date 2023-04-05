@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dessertData = void 0;
 exports.dessertData = [
     {
+        _id: "",
         name: "Dessert item",
         slug: "1",
         image: "../images/dessertImages/pic1.jpg",
@@ -15,6 +16,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "2",
         image: "../images/dessertImages/pic2.jpg",
@@ -27,6 +29,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "3",
         image: "../images/dessertImages/pic3.jpg",
@@ -39,6 +42,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "4",
         image: "../images/dessertImages/pic4.jpg",
@@ -51,6 +55,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "5",
         image: "../images/dessertImages/pic5.jpg",
@@ -63,6 +68,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "6",
         image: "../images/dessertImages/pic6.jpg",
@@ -75,6 +81,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "7",
         image: "../images/dessertImages/pic7.jpg",
@@ -87,6 +94,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "8",
         image: "../images/dessertImages/pic8.jpg",
@@ -99,6 +107,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "9",
         image: "../images/dessertImages/pic9.jpg",
@@ -111,6 +120,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "10",
         image: "../images/dessertImages/pic10.jpg",
@@ -123,6 +133,7 @@ exports.dessertData = [
         numReviews: 10,
     },
     {
+        _id: "",
         name: "Dessert item",
         slug: "11",
         image: "../images/dessertImages/pic11.jpg",

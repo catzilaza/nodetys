@@ -46,8 +46,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function getUserAll(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            // let checkInputUser:User = new User("","","","","","","","","","","");
-            // checkInputUser.userHello();
             const users = (yield dessertDbService_1.collections.users
                 .find({})
                 .toArray());
@@ -83,6 +81,7 @@ function createUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const newUser = req.body;
+            console.log("createUser(req: Request, res: Response) : ", newUser);
             const queryusername = { user_name: newUser.user_name };
             const usernameResult = (yield dessertDbService_1.collections.users.findOne(queryusername));
             if (usernameResult) {
@@ -100,7 +99,7 @@ function createUser(req, res) {
             // set user level, date/timestamp and encrypt password
             newUser.user_level = "Level User";
             newUser.user_timeStamp = new Date();
-            newUser.user_password = yield bcryptjs_1.default.hash(newUser.user_password, 10);
+            newUser.user_password = yield bcryptjs_1.default.hash(newUser.user_password, `process.env.BCRYPT_HASH_SALT`);
             const result = yield dessertDbService_1.collections.users.insertOne(newUser);
             result
                 ? res
@@ -124,17 +123,34 @@ function signinUser(req, res) {
             if (!usernameResult) {
                 return res.status(409).send(`USERNAME has not been registered`);
             }
-            //Create token
-            if (usernameResult) {
+            if (yield bcryptjs_1.default.compare(usersignin.user_password, usernameResult.user_password)) {
                 const user_id = usernameResult.user_id;
                 const user_email = usernameResult.user_email;
-                const user_token = jsonwebtoken_1.default.sign({ user_id, user_email }, `process.env.ACCESS_TOKEN_SECRET_KEY`, {
-                    expiresIn: "3m",
+                const user_token = jsonwebtoken_1.default.sign({ user_id, user_email }, `process.env.JWT_SECRET`, {
+                    expiresIn: "30m",
                     algorithm: "HS256",
                 });
                 usernameResult.user_token = user_token;
                 res.status(200).send(usernameResult);
             }
+            else {
+                return res.status(409).send(`USERNAME password is not matched`);
+            }
+            //Create token
+            // if (usernameResult) {
+            //   const user_id = usernameResult.user_id;
+            //   const user_email = usernameResult.user_email;
+            //   const user_token = jwt.sign(
+            //     { user_id, user_email },
+            //     `process.env.JWT_SECRET`,
+            //     {
+            //       expiresIn: "3m",
+            //       algorithm: "HS256",
+            //     }
+            //   );
+            //   usernameResult.user_token = user_token;
+            //   res.status(200).send(usernameResult);
+            // }
         }
         catch (error) {
             res

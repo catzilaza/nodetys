@@ -36,13 +36,13 @@ const Authenticate = (req, res, next) => {
             req.query.token ||
             req.headers["x-access-token"] ||
             req.headers.authorization;
-        try {
-            const decoded = jsonwebtoken_1.default.verify(token, `process.env.ACCESS_TOKEN_SECRET_KEY`);
-            console.log("decoded : ", decoded);
+        if (!token) {
+            return res.status(401).send("no token");
         }
-        catch (error) {
-            return res.status(401).send("Invalid Token");
-        }
+        const decoded = jsonwebtoken_1.default.verify(token, `process.env.JWT_SECRET`);
+        console.log("decoded : ", decoded);
+        // let { user_email }:any = decoded;
+        // console.log("user_email : ", user_email);
         next();
     }
     catch (error) {

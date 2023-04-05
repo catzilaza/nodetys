@@ -18,12 +18,14 @@ export const Authenticate = (
       req.headers["x-access-token"] ||
       req.headers.authorization;
 
-    try {
-      const decoded = jwt.verify(token, `process.env.ACCESS_TOKEN_SECRET_KEY`);
-      console.log("decoded : ", decoded);
-    } catch (error) {
-      return res.status(401).send("Invalid Token");
+    if (!token) {
+      return res.status(401).send("no token");
     }
+    const decoded = jwt.verify(token, `process.env.JWT_SECRET`);
+    console.log("decoded : ", decoded);
+
+    // let { user_email }:any = decoded;
+    // console.log("user_email : ", user_email);
 
     next();
   } catch (error) {
