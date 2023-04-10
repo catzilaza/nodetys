@@ -50,9 +50,9 @@ app.use(express_1.default.static("public"));
     console.log("Fail To Database Error !", error);
 });
 app.use("/", indexRoute_1.indexRouter);
-app.use("/api", indexRoute_1.indexRouter);
-app.use("/api/user", userRoute_1.userRouter);
-app.use("/api/desserts", dessertRoute_1.dessertRouter);
+//app.use("/api", indexRouter);
+app.use("/user", userRoute_1.userRouter);
+app.use("/desserts", dessertRoute_1.dessertRouter);
 app.listen(PORT, () => {
     console.log(`[Server]: It is running at http://localhost:${PORT}`);
 });

@@ -1,27 +1,27 @@
 // External dependencies
 import { ObjectId, Timestamp } from "mongodb";
-import { z } from "zod"
+import { z } from "zod";
 
 // Class Implementation
 export default class User {
   constructor(
     public user_id: string,
-    public user_token: string,
-    public user_level: string,
-    public user_timeStamp: Date,
     public user_name: string,
     public user_firstname: string,
     public user_lastname: string,
-    public user_sex: string,
     public user_age: string,
-    public user_address: string,
+    public user_sex: string,
     public user_telephone: string,
+    public user_address: string,
     public user_email: string,
-    public user_image: string,
     public user_password: string,
+    public user_image: string,
+    public user_token: string,
+    public user_level: string = "user",
+    public user_timeStamp: Date,
+    public user_enabled: Boolean,
     public id?: ObjectId
-  )  
-  {}
+  ) {}
   // public userHello(): void {
   //   console.log("Class User : userHello() :");
   // }
@@ -33,10 +33,10 @@ export default class User {
 //     $jsonSchema: {
 //       bsonType: "object",
 //       required: [
-//         "user_name",       
+//         "user_name",
 //         "user_firstname",
 //         "user_lastname",
-//         "user_email",        
+//         "user_email",
 //         "user_address",
 //         "user_telephone",
 //         "user_password",
@@ -75,7 +75,7 @@ export default class User {
 //           description: "'user_address' is required and is a string",
 //         },
 //         user_email: {
-//           bsonType: "string",            
+//           bsonType: "string",
 //           description: "'user_email' is required and is a string",
 //         },
 //         user_telephone: {

@@ -2,21 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Class Implementation
 class User {
-    constructor(user_id, user_token, user_level, user_timeStamp, user_name, user_firstname, user_lastname, user_sex, user_age, user_address, user_telephone, user_email, user_image, user_password, id) {
+    constructor(user_id, user_name, user_firstname, user_lastname, user_age, user_sex, user_telephone, user_address, user_email, user_password, user_image, user_token, user_level = "user", user_timeStamp, user_enabled, id) {
         this.user_id = user_id;
-        this.user_token = user_token;
-        this.user_level = user_level;
-        this.user_timeStamp = user_timeStamp;
         this.user_name = user_name;
         this.user_firstname = user_firstname;
         this.user_lastname = user_lastname;
-        this.user_sex = user_sex;
         this.user_age = user_age;
-        this.user_address = user_address;
+        this.user_sex = user_sex;
         this.user_telephone = user_telephone;
+        this.user_address = user_address;
         this.user_email = user_email;
-        this.user_image = user_image;
         this.user_password = user_password;
+        this.user_image = user_image;
+        this.user_token = user_token;
+        this.user_level = user_level;
+        this.user_timeStamp = user_timeStamp;
+        this.user_enabled = user_enabled;
         this.id = id;
     }
 }
@@ -27,10 +28,10 @@ exports.default = User;
 //     $jsonSchema: {
 //       bsonType: "object",
 //       required: [
-//         "user_name",       
+//         "user_name",
 //         "user_firstname",
 //         "user_lastname",
-//         "user_email",        
+//         "user_email",
 //         "user_address",
 //         "user_telephone",
 //         "user_password",
@@ -69,7 +70,7 @@ exports.default = User;
 //           description: "'user_address' is required and is a string",
 //         },
 //         user_email: {
-//           bsonType: "string",            
+//           bsonType: "string",
 //           description: "'user_email' is required and is a string",
 //         },
 //         user_telephone: {

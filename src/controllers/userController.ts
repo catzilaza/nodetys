@@ -68,8 +68,8 @@ export async function createUser(req: Request, res: Response) {
     newUser.user_timeStamp = new Date();
     newUser.user_password = await bcrypt.hash(
       newUser.user_password,
-      `process.env.BCRYPT_HASH_SALT`
-    );
+      10
+    );//`process.env.BCRYPT_HASH_SALT`
 
     const result = await collections.users.insertOne(newUser);
 
@@ -109,10 +109,8 @@ export async function signinUser(req: Request, res: Response) {
           algorithm: "HS256",
         }
       );
-
       
-      usernameResult.user_token = user_token;
-
+      usernameResult.user_token = user_token;      
       res.status(200).send(usernameResult);
     }
     else {

@@ -29,9 +29,9 @@ connectToDatabase()
   });
 
 app.use("/", indexRouter);
-app.use("/api", indexRouter);
-app.use("/api/user", userRouter);
-app.use("/api/desserts", dessertRouter);
+//app.use("/api", indexRouter);
+app.use("/user", userRouter);
+app.use("/desserts", dessertRouter);
 
 app.listen(PORT, () => {
   console.log(`[Server]: It is running at http://localhost:${PORT}`);

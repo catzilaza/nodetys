@@ -99,7 +99,7 @@ function createUser(req, res) {
             // set user level, date/timestamp and encrypt password
             newUser.user_level = "Level User";
             newUser.user_timeStamp = new Date();
-            newUser.user_password = yield bcryptjs_1.default.hash(newUser.user_password, `process.env.BCRYPT_HASH_SALT`);
+            newUser.user_password = yield bcryptjs_1.default.hash(newUser.user_password, 10); //`process.env.BCRYPT_HASH_SALT`
             const result = yield dessertDbService_1.collections.users.insertOne(newUser);
             result
                 ? res
